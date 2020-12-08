@@ -19,6 +19,8 @@ Test:
     - docker:19.03.5-dind
   stage: Test
   script:
+    - echo $ECR_REPO
+    - echo $CI_COMMIT_SHORT_SHA  
     - apk add python3-dev libffi-dev openssl-dev gcc libc-dev make
     - pip3 install docker-compose
     - docker-compose run --rm app sh -c "python manage.py wait_for_db && python manage.py test"
