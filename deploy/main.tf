@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket         = "student-leader-board-app-tfstate"
+    bucket         = "slb-api-tfstate"
     key            = "slb-api.tfstate"
     region         = "us-east-1"
     encrypt        = true

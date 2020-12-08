@@ -7,7 +7,7 @@ variable "project" {
 }
 
 variable "contact" {
-  default = "scottakirschner@gmail.com"
+  default = "scottadev@gmail.com"
 }
 
 variable "db_username" {
@@ -24,12 +24,12 @@ variable "bastion_key_name" {
 
 variable "ecr_image_api" {
   description = "ECR image for API"
-  default     = "098531822965.dkr.ecr.us-east-1.amazonaws.com/student-leader-board-api-devops:latest"
+  default     = "964127226690.dkr.ecr.us-east-1.amazonaws.com/student-leader-board-api-devops:latest"
 }
 
 variable "ecr_image_proxy" {
   description = "ECR image for proxy"
-  default     = "098531822965.dkr.ecr.us-east-1.amazonaws.com/student-leader-board-api-proxy"
+  default     = "964127226690.dkr.ecr.us-east-1.amazonaws.com/student-leader-board-api-proxy"
 }
 
 variable "django_secret_key" {

@@ -122,30 +122,30 @@ resource "aws_ecs_service" "api" {
     security_groups = [aws_security_group.ecs_service.id]
   }
 
-  # load_balancer {
-  #   target_group_arn = aws_lb_target_group.api.arn
-  #   container_name   = "proxy"
-  #   container_port   = 8000
-  # }
+  load_balancer {
+    target_group_arn = aws_lb_target_group.api.arn
+    container_name   = "proxy"
+    container_port   = 8000
+  }
 }
 
-# data "template_file" "ecs_s3_write_policy" {
-#   template = file("templates/ecs/s3-write-policy.json.tpl")
+data "template_file" "ecs_s3_write_policy" {
+  template = file("templates/ecs/s3-write-policy.json.tpl")
 
-#   vars = {
-#     bucket_arn = aws_s3_bucket.app_public_files.arn
-#   }
-# }
+  vars = {
+    bucket_arn = aws_s3_bucket.app_public_files.arn
+  }
+}
 
-# resource "aws_iam_policy" "ecs_s3_access" {
-#   name        = "${local.prefix}-AppS3AccessPolicy"
-#   path        = "/"
-#   description = "Allow access to the student leader board S3 bucket"
+resource "aws_iam_policy" "ecs_s3_access" {
+  name        = "${local.prefix}-AppS3AccessPolicy"
+  path        = "/"
+  description = "Allow access to the student leader board S3 bucket"
 
-#   policy = data.template_file.ecs_s3_write_policy.rendered
-# }
+  policy = data.template_file.ecs_s3_write_policy.rendered
+}
 
-# resource "aws_iam_role_policy_attachment" "ecs_s3_access" {
-#   role       = aws_iam_role.app_iam_role.name
-#   policy_arn = aws_iam_policy.ecs_s3_access.arn
-# }
+resource "aws_iam_role_policy_attachment" "ecs_s3_access" {
+  role       = aws_iam_role.app_iam_role.name
+  policy_arn = aws_iam_policy.ecs_s3_access.arn
+}
