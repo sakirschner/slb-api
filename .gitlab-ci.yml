@@ -4,12 +4,6 @@ image:
     - '/usr/bin/env'
     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
-variables:
-  ECR_REPO: "964127226690.dkr.ecr.us-east-1.amazonaws.com/student-leader-board-api-devops"
-  AWS_ACCESS_KEY_ID: "AKIA6A6TV7NBIENPHN3E"
-  AWS_SECRET_ACCESS_KEY: "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"
-  DJANGO_SECRET_KEY: "nhrc8943q9rb43r7348"
-
 stages:
   - Test
   - Build and Push
