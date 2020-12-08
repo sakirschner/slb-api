@@ -11,7 +11,6 @@ terraform {
 provider "aws" {
   region                  = "us-east-1"
   version                 = "~> 2.54.0"
-  skip_metadata_api_check = true
 }
 
 locals {
