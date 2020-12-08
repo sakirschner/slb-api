@@ -52,7 +52,6 @@ data "template_file" "api_container_definitions" {
     allowed_hosts            = aws_lb.api.dns_name
     s3_storage_bucket_name   = aws_s3_bucket.app_public_files.bucket
     s3_storage_bucket_region = data.aws_region.current.name
-
   }
 }
 
@@ -140,7 +139,7 @@ data "template_file" "ecs_s3_write_policy" {
 resource "aws_iam_policy" "ecs_s3_access" {
   name        = "${local.prefix}-AppS3AccessPolicy"
   path        = "/"
-  description = "Allow access to the student leader board S3 bucket"
+  description = "Allow access to the recipe app S3 bucket"
 
   policy = data.template_file.ecs_s3_write_policy.rendered
 }
