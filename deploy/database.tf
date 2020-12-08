@@ -39,8 +39,8 @@ resource "aws_db_instance" "main" {
   engine_version          = "11.4"
   instance_class          = "db.t2.micro"
   db_subnet_group_name    = aws_db_subnet_group.main.name
-  password                = var.db_password
-  username                = var.db_username
+  password                = "jenny123"
+  username                = "slbapp"
   backup_retention_period = 0
   multi_az                = false
   skip_final_snapshot     = true
