@@ -67,7 +67,7 @@ Dev Plan:
     - terraform workspace select dev || terraform workspace new dev
     - terraform plan
   rules:
-    - if: '$CI_COMMIT_BRANCH == "dev"'
+    - if: '$CI_COMMIT_BRANCH =~/^(dev|production)$/
 
 Dev Apply:
   stage: Dev Apply
@@ -78,7 +78,7 @@ Dev Apply:
     - terraform workspace select dev
     - terraform apply -auto-approve
   rules:
-    - if: '$CI_COMMIT_BRANCH == "dev"'
+    - if: '$CI_COMMIT_BRANCH =~/^(dev|production)$/
 
 Production Plan:
   stage: Production Plan
