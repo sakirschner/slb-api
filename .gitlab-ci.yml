@@ -4,6 +4,11 @@ image:
     - '/usr/bin/env'
     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
+variables:
+  ECR_REPO: "964127226690.dkr.ecr.us-east-1.amazonaws.com/student-leader-board-api-devops"
+  AWS_ACCESS_KEY_ID: "AKIA6A6TV7NBIENPHN3E"
+  AWS_SECRET_ACCESS_KEY: "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"
+
 stages:
   - Test
   - Build and Push
@@ -19,6 +24,8 @@ Test:
     - docker:19.03.5-dind
   stage: Test
   script:
+    - echo $ECR_REPO
+    - echo $CI_COMMIT_SHORT_SHA  
     - apk add python3-dev libffi-dev openssl-dev gcc libc-dev make
     - pip3 install docker-compose
     - docker-compose run --rm app sh -c "python manage.py wait_for_db && python manage.py test"
