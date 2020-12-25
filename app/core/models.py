@@ -111,3 +111,13 @@ class StudentReward(models.Model):
     
     def __str__(self):
         return self.reward.reward
+
+class Group(models.Model):
+    """Groups of students"""
+    name = models.CharField(max_length=255, blank=True)
+    points = models.IntegerField(blank=True, default=0)
+    students = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    rewards = models.ManyToManyField('Reward')
+
+    def __str__(self):
+        return self.group.name
