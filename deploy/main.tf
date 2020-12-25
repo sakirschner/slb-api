@@ -4,7 +4,7 @@ terraform {
     key            = "slb-api.tfstate"
     region         = "us-east-1"
     encrypt        = true
-    dynamodb_table = "slb-tf-state-lock"
+    dynamodb_table = "slb-tf-statelock"
   }
 }
 

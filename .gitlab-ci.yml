@@ -7,8 +7,8 @@ image:
 stages:
   - Test
   - Build and Push
-  - Staging Plan
-  - Staging Apply
+  - Dev Plan
+  - Dev Apply
   - Production Plan
   - Production Apply
   - Destroy
@@ -19,11 +19,13 @@ Test:
     - docker:19.03.5-dind
   stage: Test
   script:
+    - echo $ECR_REPO
+    - echo $CI_COMMIT_SHORT_SHA  
     - apk add python3-dev libffi-dev openssl-dev gcc libc-dev make
     - pip3 install docker-compose
     - docker-compose run --rm app sh -c "python manage.py wait_for_db && python manage.py test"
   rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~/^(main|production)$/ || $CI_COMMIT_BRANCH =~ /^(main|production)$/'
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~/^(dev|production)$/ || $CI_COMMIT_BRANCH =~ /^(dev|production)$/'
 
 Validate Terraform:
   stage: Test
@@ -33,7 +35,7 @@ Validate Terraform:
     - terraform validate
     - terraform fmt -check
   rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~/^(main|production)$/ || $CI_COMMIT_BRANCH =~ /^(main|production)$/'
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~/^(dev|production)$/ || $CI_COMMIT_BRANCH =~ /^(dev|production)$/'
 
 Build and Push:
   image: docker:19.03.5
@@ -49,29 +51,29 @@ Build and Push:
     - docker tag $ECR_REPO:$CI_COMMIT_SHORT_SHA $ECR_REPO:latest
     - docker push $ECR_REPO:latest
   rules:
-    - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+    - if: '$CI_COMMIT_BRANCH =~/^(dev|production)$/'
 
-Staging Plan:
-  stage: Staging Plan
+Dev Plan:
+  stage: Dev Plan
   script:
     - cd deploy/
     - export TF_VAR_ecr_image_api=$ECR_REPO:$CI_COMMIT_SHORT_SHA
     - terraform init
-    - terraform workspace select staging || terraform workspace new staging
+    - terraform workspace select dev || terraform workspace new dev
     - terraform plan
   rules:
-    - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+    - if: '$CI_COMMIT_BRANCH =~/^(dev|production)$/'
 
-Staging Apply:
-  stage: Staging Apply
+Dev Apply:
+  stage: Dev Apply
   script:
     - cd deploy/
     - export TF_VAR_ecr_image_api=$ECR_REPO:$CI_COMMIT_SHORT_SHA
     - terraform init
-    - terraform workspace select staging
+    - terraform workspace select dev
     - terraform apply -auto-approve
   rules:
-    - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+    - if: '$CI_COMMIT_BRANCH =~/^(dev|production)$/'
 
 Production Plan:
   stage: Production Plan
@@ -95,15 +97,15 @@ Production Apply:
   rules:
     - if: '$CI_COMMIT_BRANCH == "production"'
 
-Staging Destroy:
+Dev Destroy:
   stage: Destroy
   script:
     - cd deploy/
     - terraform init
-    - terraform workspace select staging
+    - terraform workspace select dev
     - terraform destroy -auto-approve
   rules:
-    - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+    - if: '$CI_COMMIT_BRANCH =~ /^(dev|production)$/'
       when: manual
 
 Production Destroy:
