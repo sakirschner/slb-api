@@ -1,7 +1,6 @@
 from django.contrib.auth import get_user_model, authenticate
 from django.utils.translation import ugettext_lazy as _
 
-
 from rest_framework import serializers
 
 
@@ -10,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ('id', 'created_at', 'email', 'password', 'first_name', 'last_name', 'user_name', 'level', 'image')
+        fields = ('id', 'created_at', 'email', 'password', 'first_name', 'last_name', 'user_name', 'level', 'image',)
         read_only_fields = ('id', 'created_at')
         extra_kwargs = {'password': {'write_only': True, 'min_length': 5}}
 

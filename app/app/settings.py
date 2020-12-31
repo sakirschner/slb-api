@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'achievement',
     'reward',
     'group',
+    'django_filters',
     'corsheaders',
 ]
 
