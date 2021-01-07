@@ -1,18 +1,20 @@
-from django.contrib.auth import get_user_model
+# from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
-from core.models import Group, Reward
+from core.models import Group
+from reward.serializers import RewardSerializer
+from user.serializers import UserSerializer
 
 
 class GroupSerializer(serializers.ModelSerializer):
     """Serializer for group objects"""
-    students = serializers.PrimaryKeyRelatedField(
+    students = UserSerializer(
         many=True,
-        queryset=get_user_model().objects.all()
+        read_only=True
     )
-    rewards = serializers.PrimaryKeyRelatedField(
+    rewards = RewardSerializer(
         many=True,
-        queryset=Reward.objects.all()
+        read_only=True
     )
 
     class Meta:
