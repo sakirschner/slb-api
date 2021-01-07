@@ -3,8 +3,14 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from core.models import Achievement, StudentAchievement
+from core.models import Achievement, StudentAchievement, User
 from achievement import serializers
+
+import django_filters
+
+from django_filters import rest_framework as filters
+
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class AchievementViewSet(viewsets.GenericViewSet,
@@ -37,6 +43,29 @@ class GetAchievementByIdView(generics.RetrieveUpdateDestroyAPIView):
         return Achievement.objects.get(id=self.kwargs['pk'])
 
 
+class NumberInFilter(filters.BaseInFilter, filters.NumberFilter):
+    """will seperate the ids in the url parameters"""
+    pass
+
+
+class StudentAchievementFilter(django_filters.FilterSet):
+    """Filters achievements based on user id"""
+    # studentachievements = django_filters.MultipleChoiceFilter(
+    #     field_name='student__id',
+    #     lookup_expr="icontains",
+    #     conjoined=True,
+    # )
+
+    student_in = NumberInFilter(
+        field_name='student__id',
+        lookup_expr='in',
+        )
+
+    class Meta:
+        model = StudentAchievement
+        fields = ['student_in',]     
+
+
 class StudentAchievementViewSet(viewsets.GenericViewSet,
                          viewsets.ViewSet,
                          mixins.ListModelMixin,
@@ -46,6 +75,9 @@ class StudentAchievementViewSet(viewsets.GenericViewSet,
     permission_classes = (IsAuthenticated,)
     queryset = StudentAchievement.objects.all()
     serializer_class = serializers.StudentAchievementSerializer
+    filter_backends = [DjangoFilterBackend]
+    # filter_fields = ('id', 'student')
+    filter_class = StudentAchievementFilter
 
     def get_queryset(self):
         """Return all objects"""

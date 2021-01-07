@@ -49,7 +49,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    image = models.ImageField(null=True, upload_to=user_image_file_path)
+    image = models.ImageField(blank=True, upload_to=user_image_file_path)
 
     objects = UserManager()
 
@@ -111,3 +111,13 @@ class StudentReward(models.Model):
     
     def __str__(self):
         return self.reward.reward
+
+class Group(models.Model):
+    """Groups of students"""
+    name = models.CharField(max_length=255, blank=True)
+    points = models.IntegerField(blank=True, default=0)
+    students = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    rewards = models.ManyToManyField('Reward', blank=True)
+
+    def __str__(self):
+        return self.name
