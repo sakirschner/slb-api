@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'changeme')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 ALLOWED_HOSTS.extend(
     filter(
         None,
@@ -47,12 +47,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'rest_framework',
     'rest_framework.authtoken',
     'core',
     'user',
     'achievement',
     'reward',
+    'group',
+    'django_filters',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -63,7 +67,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'app.urls'
 
