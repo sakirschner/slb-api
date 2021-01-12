@@ -49,7 +49,7 @@ class RewardAdmin(admin.ModelAdmin):
     ordering = ['reward']
     list_display = ('reward',)
     readonly_fields = ('id', 'created_at',)
-    fieldsets = ((None, {'fields': ('id', 'created_at', 'reward', 'description')}),)
+    fieldsets = ((None, {'fields': ('id', 'created_at', 'reward', 'description', 'image')}),)
 
 
 @admin.register(models.StudentReward)
