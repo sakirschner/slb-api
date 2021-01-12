@@ -14,6 +14,13 @@ def user_image_file_path(instance, filename):
 
     return os.path.join('uploads/user/', filename)
 
+def reward_image_file_path(instance, filename):
+    """Generate a new file path for reward image"""
+    ext = filename.split('.')[-1]
+    filename = f'{uuid.uuid4()}.{ext}'
+
+    return os.path.join('uploads/reward/', filename)
+
 
 class UserManager(BaseUserManager):
 
@@ -91,6 +98,7 @@ class Reward(models.Model):
     description = models.TextField(blank=True, default="")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    image = models.ImageField(blank=True, upload_to=reward_image_file_path)
 
     def __str__(self):
         return self.reward
