@@ -9,7 +9,7 @@ class RewardSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Reward
-        fields = ('id', 'reward', 'description', 'created_at', 'updated_at')
+        fields = ('id', 'reward', 'description', 'created_at', 'updated_at', 'image',)
         read_only_fields = ('id', 'created_at', 'updated_at')
 
 
@@ -28,3 +28,11 @@ class StudentRewardSerializer(serializers.ModelSerializer):
         model = StudentReward
         fields = ('id', 'student', 'reward', 'notes', 'created_at', 'updated_at')
         read_only_fields = ('id', 'created_at', 'updated_at')
+
+class RewardImageSerializer(serializers.ModelSerializer):
+    """Serializers for uploading images to rewards"""
+
+    class Meta:
+        model = Reward
+        fields = ('id', 'image')
+        read_only_fields = ('id',)
