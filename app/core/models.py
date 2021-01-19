@@ -14,6 +14,13 @@ def user_image_file_path(instance, filename):
 
     return os.path.join('uploads/user/', filename)
 
+def reward_image_file_path(instance, filename):
+    """Generate a new file path for reward image"""
+    ext = filename.split('.')[-1]
+    filename = f'{uuid.uuid4()}.{ext}'
+
+    return os.path.join('uploads/reward/', filename)
+
 
 class UserManager(BaseUserManager):
 
@@ -49,7 +56,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    image = models.ImageField(null=True, upload_to=user_image_file_path)
+    image = models.ImageField(blank=True, upload_to=user_image_file_path)
 
     objects = UserManager()
 
@@ -91,6 +98,7 @@ class Reward(models.Model):
     description = models.TextField(blank=True, default="")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    image = models.ImageField(blank=True, upload_to=reward_image_file_path)
 
     def __str__(self):
         return self.reward
@@ -111,3 +119,13 @@ class StudentReward(models.Model):
     
     def __str__(self):
         return self.reward.reward
+
+class Group(models.Model):
+    """Groups of students"""
+    name = models.CharField(max_length=255, blank=True)
+    points = models.IntegerField(blank=True, default=0)
+    students = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    rewards = models.ManyToManyField('Reward', blank=True)
+
+    def __str__(self):
+        return self.name
