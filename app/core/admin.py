@@ -49,7 +49,7 @@ class RewardAdmin(admin.ModelAdmin):
     ordering = ['reward']
     list_display = ('reward',)
     readonly_fields = ('id', 'created_at',)
-    fieldsets = ((None, {'fields': ('id', 'created_at', 'reward', 'description')}),)
+    fieldsets = ((None, {'fields': ('id', 'created_at', 'reward', 'description', 'image')}),)
 
 
 @admin.register(models.StudentReward)
@@ -58,6 +58,13 @@ class StudentRewardAdmin(admin.ModelAdmin):
     list_display = ('reward', 'student', 'created_at')
     readonly_fields = ('id', 'created_at',)
     fieldsets = ((None, {'fields': ('id', 'created_at', 'reward', 'student', 'notes')}),)
+
+@admin.register(models.Group)
+class GroupAdmin(admin.ModelAdmin):
+    ordering = ['name']
+    list_display = ('name',)
+    readonly_fields = ('id',)
+    fieldsets = ((None, {'fields': ('id', 'name', 'points', 'students', 'rewards',)}),)
 
 #admin.site.register(models.User, UserAdmin)
 #admin.site.register(models.Achievement, AchievementAdmin)

@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
 from core.models import Achievement, StudentAchievement
+from user.serializers import UserSerializer
 
 
 class AchievementSerializer(serializers.ModelSerializer):
@@ -15,13 +16,13 @@ class AchievementSerializer(serializers.ModelSerializer):
 
 class StudentAchievementSerializer(serializers.ModelSerializer):
     """Serializer for studentachievement objects"""
-    student = serializers.PrimaryKeyRelatedField(
+    student = UserSerializer(
         many=False,
-        queryset=get_user_model().objects.all()
+        read_only=True
     )
-    achievement = serializers.PrimaryKeyRelatedField(
+    achievement = AchievementSerializer(
         many=False,
-        queryset=Achievement.objects.all()
+        read_only=True
     )
 
     class Meta:
