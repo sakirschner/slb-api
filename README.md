@@ -208,4 +208,4 @@ Please contact Scott Kirschner
 
 Email: scottakdev@gmail.com
 <br>
-Website: scottakirschner.com
+Website: <a href="https://scottkirschner.com">scottkirschner.com</a>
