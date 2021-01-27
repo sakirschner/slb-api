@@ -181,14 +181,14 @@ The official <a href="https://www.djangoproject.com/">Django documentation</a> r
 
 The proxy server for this application is built using <a href="https://www.nginx.com/">NGINX</a> specifically designed to serve static files and is served with <a href="https://uwsgi-docs.readthedocs.io/en/latest/">uWSGI</a>. 
 <br><br>
-<a href="https://gitlab.com/sakirschner/student-leader-board-api-proxy">The source code for the proxy server can be found here</a>.
+<a href="https://github.com/sakirschner/slb-proxy">The source code for the proxy server can be found here</a>.
 
 - ## Run the app using the proxy in the uWSGI mode locally
     In order to test the proxy deployment locally this project is set up with a docker-compose file to do just that. This allows you to switch the API to use the proxy in the uWSGI mode instead of using the Django development server which is defined in the main Dockerfile. There are of course some dependencies.
 
     - Clone the proxy
         
-        You must have the proxy installed on your machine before you can continue with the rest of the steps. You can clone the repo <a href="https://gitlab.com/sakirschner/student-leader-board-api-proxy">here</a>.
+        You must have the proxy installed on your machine before you can continue with the rest of the steps. You can clone the repo <a href="https://github.com/sakirschner/slb-proxy">here</a>.
     - Build and tag the docker image
         
         In the root of the proxy directory run this command:
