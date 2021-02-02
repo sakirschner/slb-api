@@ -10,7 +10,7 @@ The front end for this application can be found [here](https://github.com/sakirs
 ---
 The API is fully dockerized so you can easily run a few commands to get the application up and running. (You must have docker installed on your machine to properly run the API. You can install docker <a href="https://docs.docker.com/get-docker/">here</a>.)  
 - ### Build the docker image:
-    - This step allows you to run the application with all of its dependencies without having to worry about your manchine's environment setup.
+    - This step allows you to run the application with all of its dependencies without having to worry about your machine’s environment setup.
     <br><br>
         ```
         docker-compose build
@@ -38,7 +38,7 @@ If you navigate to the url you will be able to view and test all the API endpoin
 
 However, most of the endpoints require an access token, so in order to properly use the api you must follow these steps.
 - ### Create a superuser
-    - A superuser will have permission for all the acpabilities of the API. This will also give you access to the admin portal which is described below.
+    - A superuser will have permission for all the capabilities of the API. This will also give you access to the admin portal which is described below.
         <br><br>
         ```
         docker-compose run --rm app sh -c "python manage.py createsuperuser"
@@ -98,7 +98,7 @@ docker-compose run --rm app sh -c "python manage.py test"
 This project uses a few tools in order to assist with CI/CD which are not necessary for local development/testing but will be discussed here.
 
 - ## Terraform 
-    <a href="https://www.terraform.io/">Terraform</a> is an infastrcture as code platform that manages the cloud services this project uses for hosting, which is handled via Amazon Web Services. Defined in the deploy directory of this project, Terraform spins up everything needed to properly host the API via AWS during the CI/CD pipeline. It also provides the nevcessary tools to easily tear down the entire envitonment. In order to run Terraform locally you'll need to have:
+    <a href="https://www.terraform.io/">Terraform</a> is an infrastructure as code platform that manages the cloud services this project uses for hosting, which is handled via Amazon Web Services. Defined in the deploy directory of this project, Terraform spins up everything needed to properly host the API via AWS during the CI/CD pipeline. It also provides the necessary tools to easily tear down the entire environment.. In order to run Terraform locally you'll need to have:
     <br><br>
     - Access to the AWS account as an IAM user. Please contact scottakdev@gmail.com for more information.
     - Install <a href="https://github.com/99designs/aws-vault">AWS Vault</a> on your machine with the proper AWS credentials defined below.
@@ -117,7 +117,7 @@ This project uses a few tools in order to assist with CI/CD which are not necess
             region=us-east-1
             mfa_serial=<Assigned MFA device>
             ```
-            Your MFA serial can be found in the smae location as your Access key ID.
+            Your MFA serial can be found in the same location as your Access key ID.
         - Start a new session
             ```
             aws-vault exec <YOUR USERNAME>
@@ -129,7 +129,7 @@ This project uses a few tools in order to assist with CI/CD which are not necess
             You'll be prompted to enter in your MFA token and your password.
             <br><br>
 
-    With AWS Vault configured you can now initialize Terrform:
+    With AWS Vault configured you can now initialize Terraform:
     
     - Make sure you have your AWS Vault session running on the terminal you wish to run Terraform on: 
         ```
@@ -148,7 +148,7 @@ This project uses a few tools in order to assist with CI/CD which are not necess
         docker-compose -f deploy/docker-compose.yml run --rm terraform workspace select dev
         ```
 
-    Now you can make changes to the terrform code and run these commands:
+    Now you can make changes to the Terraform code and run these commands:
     - Format - formats the code to Terrform standard
         ```
         docker-compose -f deploy/docker-compose.yml run --rm terraform fmt
@@ -167,17 +167,17 @@ This project uses a few tools in order to assist with CI/CD which are not necess
 
 - ## GitLab
 
-    This project encorporates GitLab Pipelines in order to automate the CI/CD process.
+    This project incorporates GitLab Pipelines in order to automate the CI/CD process.
     <br><br>
-    - <a href="https://gitlab.com/sakirschner/slb-api/-/pipelines">GitLab Pipelines for this project</a>. For access to the piplines please contact scottakdev@gmail.com.
+    - <a href="https://gitlab.com/sakirschner/slb-api/-/pipelines">GitLab Pipelines for this project</a>. For access to the pipelines please contact scottakdev@gmail.com.
     <br><br>
 
-    The code for this can be found in ```.gitlab-ci.yml``` in the root directory. When the code is pushed to the ```dev``` branch the pipeline will be initiated to update the dev environment, and when it is pushed to the ```production``` branch the pipeline will be initiated to update the production environment. This of course is assuming all tehe steps in the pipeline pass.
+    The code for this can be found in ```.gitlab-ci.yml``` in the root directory. When the code is pushed to the ```dev``` branch the pipeline will be initiated to update the dev environment, and when it is pushed to the ```production``` branch the pipeline will be initiated to update the production environment. This of course is assuming all the steps in the pipeline pass.
 <br><br>
 
 ## Proxy
 ---
-The official <a href="https://www.djangoproject.com/">Django documentation</a> reccomends using a proxy server in front of applications in order to serve static files due to Django not being efficient in doing so. 
+The official <a href="https://www.djangoproject.com/">Django documentation</a> recommends using a proxy server in front of applications in order to serve static files due to Django not being efficient in doing so. 
 
 The proxy server for this application is built using <a href="https://www.nginx.com/">NGINX</a> specifically designed to serve static files and is served with <a href="https://uwsgi-docs.readthedocs.io/en/latest/">uWSGI</a>. 
 <br><br>
